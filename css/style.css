@@ -1,0 +1,25 @@
+*{
+  box-sizing:border-box;
+}
+
+main {
+  width: 80%;
+  margin: 3rem auto;
+  display: grid
+}
+
+#img-container {
+  border:1px solid black;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 600px;
+
+}
+
+#img-container > img {
+  height:200px;
+  width:auto;
+  border: 1px solid black;
+  padding:10px;
+}
