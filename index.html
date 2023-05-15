@@ -10,21 +10,27 @@
 </head>
 <body>
   <header>
-    <h1>Title</h1>
+    <img id="logo" src="img/logo.svg" alt="Odd Duck Products Logo">
+    <h1>Odd Duck Product Company R&D</h1>
   </header>
   <main>
-    <div id="image-one-container">
-      <img id="img-one" src="" alt="">
+    <div id="instructions">
+      <h2>Instructions</h2>
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;Each round, three products will be displayed. Please vote for the product you feel should be Odd Duck Co's next market leading product by clicking on the image you prefer! </br> &nbsp;&nbsp;&nbsp;&nbsp;At the end of 25 selections, hit the show results button to see your votes.</p>
     </div>
-    <div id="image-two-container">
-      <img id="img-two" src="" alt="">
-    </div>
-    <div id="image-three-container">
-      <img id="img-three" src="" alt="">
-    </div>
-    <div class="results-container"></div>
+    <section id="img-container">
+      <img id ="img-one"src="" alt="">
+      <img id ="img-two" src="" alt="">
+      <img id ="img-three" src="" alt="">
+    </section>
+    <section id="results-container">
+      <button type="button" id = "show-results-btn">View Results</button>
+    <ul id="results-container"></ul>
+    </section>
+    
   </main>
   <footer></footer>
+  <script src="app.js"></script>
   
 </body>
 </html>
