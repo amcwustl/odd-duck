@@ -17,19 +17,29 @@
     <div id="instructions">
       <h2>Instructions</h2>
       <p>&nbsp;&nbsp;&nbsp;&nbsp;Each round, three products will be displayed. Please vote for the product you feel should be Odd Duck Co's next market leading product by clicking on the image you prefer! </br> &nbsp;&nbsp;&nbsp;&nbsp;At the end of 25 selections, hit the show results button to see your votes.</p>
+      
     </div>
+    
     <section id="img-container">
       <img id ="img-one"src="" alt="">
       <img id ="img-two" src="" alt="">
       <img id ="img-three" src="" alt="">
     </section>
-    <section id="results-container">
+    <section id="results">
       <button type="button" id = "show-results-btn">View Results</button>
-    <ul id="results-container"></ul>
+      
+      <div id="results">
+        <ul id="results-container"></ul>
+      </div>
+      
     </section>
-    
+    <div id="chart">
+        <canvas id="myChart"></canvas>
+    </div>
   </main>
   <footer></footer>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.umd.min.js">
+  </script>
   <script src="app.js"></script>
   
 </body>

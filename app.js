@@ -3,6 +3,7 @@
 // global variables
 let votingRounds = 25;
 let productsArray = [];
+let previousView = new Array(6);
 
 // DOM Windows
 let imgContainer = document.getElementById('img-container');
@@ -11,6 +12,7 @@ let imgTwo = document.getElementById('img-two');
 let imgThree = document.getElementById('img-three');
 let resultBtn = document.getElementById('show-results-btn');
 let resultsList = document.getElementById('results-container');
+const ctx = document.getElementById('myChart');
 
 // ** FUNCTIONS **
 
@@ -31,13 +33,22 @@ function renderImgs(){
   let imageOneIndex = randomIndexGenerator();
   let imageTwoIndex = randomIndexGenerator();
   let imageThreeIndex = randomIndexGenerator();
+  previousView.splice(0,3);
 
-  while (imageTwoIndex === imageOneIndex){
+  while (previousView.includes(imageOneIndex)) {
+    imageOneIndex = randomIndexGenerator();
+  }
+  previousView.push(imageOneIndex);
+
+  while (previousView.includes(imageTwoIndex)) {
     imageTwoIndex = randomIndexGenerator();
   }
-  while (imageThreeIndex === imageOneIndex || imageThreeIndex === imageTwoIndex){
+  previousView.push(imageTwoIndex);
+
+  while (previousView.includes(imageThreeIndex)) {
     imageThreeIndex = randomIndexGenerator();
   }
+  previousView.push(imageThreeIndex);
 
   imgOne.src = productsArray[imageOneIndex].image;
   imgOne.title = productsArray[imageOneIndex].name;
@@ -64,6 +75,7 @@ function handleImgClick(event){
 
   if (votingRounds === 0){
     imgContainer.removeEventListener('click', handleImgClick);
+    resultBtn.classList.add('neon-blink');
   }
 }
 
@@ -77,7 +89,70 @@ function handleShowResults(){
       resultsList.appendChild(productsListItem);
     }
     resultBtn.removeEventListener('click', handleShowResults);
+    resultBtn.classList.remove('neon-blink');
+    renderChart();
   }
+}
+
+function renderChart(){
+  let productNames = [];
+  let productVotes = [];
+  let productViews = [];
+
+  for (let i in productsArray){
+    productNames.push(productsArray[i].name[0].toUpperCase() + productsArray[i].name.slice(1));
+    productVotes.push(productsArray[i].votes);
+    productViews.push(productsArray[i].views);
+  }
+
+  let chartObj = {
+    type: 'bar',
+    data: {
+      labels: productNames,
+      datasets: [{
+        label: '# of Views',
+        data: productViews,
+        borderWidth: 3,
+        borderColor: '#8b008b',
+        backgroundColor: 'rgb(204, 153, 255)'
+      },
+      {
+        label: '# of Votes',
+        data: productVotes,
+        borderWidth: 3,
+        borderColor: 'rgb(204, 85, 0)',
+        backgroundColor: 'rgb(255, 204, 153)'
+      }
+      ]
+    },
+    options: {
+      plugins: {
+        tooltip: {
+          enabled: true,
+          mode: 'nearest',
+          backgroundColor: 'rgb(0, 0, 139)',
+
+
+        },
+        title: {
+          display: true,
+          text: 'Odd Duck Product Voting Results'
+        }
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          display: true,
+          text: 'Votes'
+        },
+        x: {
+          text: 'Product Name',
+          display: true
+        }
+      }
+    }
+  };
+  new Chart(ctx, chartObj);
 }
 
 // executable code
