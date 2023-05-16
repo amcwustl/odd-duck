@@ -12,6 +12,7 @@ let imgTwo = document.getElementById('img-two');
 let imgThree = document.getElementById('img-three');
 let resultBtn = document.getElementById('show-results-btn');
 let resultsList = document.getElementById('results-container');
+const ctx = document.getElementById('myChart');
 
 // ** FUNCTIONS **
 
@@ -89,7 +90,69 @@ function handleShowResults(){
     }
     resultBtn.removeEventListener('click', handleShowResults);
     resultBtn.classList.remove('neon-blink');
+    renderChart();
   }
+}
+
+function renderChart(){
+  let productNames = [];
+  let productVotes = [];
+  let productViews = [];
+
+  for (let i in productsArray){
+    productNames.push(productsArray[i].name[0].toUpperCase() + productsArray[i].name.slice(1));
+    productVotes.push(productsArray[i].votes);
+    productViews.push(productsArray[i].views);
+  }
+
+  let chartObj = {
+    type: 'bar',
+    data: {
+      labels: productNames,
+      datasets: [{
+        label: '# of Views',
+        data: productViews,
+        borderWidth: 3,
+        borderColor: '#8b008b',
+        backgroundColor: 'rgb(204, 153, 255)'
+      },
+      {
+        label: '# of Votes',
+        data: productVotes,
+        borderWidth: 3,
+        borderColor: 'rgb(204, 85, 0)',
+        backgroundColor: 'rgb(255, 204, 153)'
+      }
+      ]
+    },
+    options: {
+      plugins: {
+        tooltip: {
+          enabled: true,
+          mode: 'nearest',
+          backgroundColor: 'rgb(0, 0, 139)',
+
+
+        },
+        title: {
+          display: true,
+          text: 'Odd Duck Product Voting Results'
+        }
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          display: true,
+          text: 'Votes'
+        },
+        x: {
+          text: 'Product Name',
+          display: true
+        }
+      }
+    }
+  };
+  new Chart(ctx, chartObj);
 }
 
 // executable code
