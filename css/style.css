@@ -91,6 +91,10 @@ h2 {
   padding:10px;
 }
 
+#img-container > img:hover {
+  border: 2px dashed green;
+}
+
 button {
   width: 200px;
   height:50px;
@@ -99,8 +103,28 @@ button {
   font-family: 'Roboto', sans-serif;
   font-size: 20px;
   margin-bottom: 20px;
+  
 }
 
 ul li {
   text-transform: capitalize;
+}
+
+/* Blinking animation code form chatgpt */
+
+@keyframes blink {
+  0% {
+    border-color: transparent;
+  }
+  50% {
+    border-color: red;
+  }
+  100% {
+    border-color: transparent;
+  }
+}
+
+.neon-blink {
+  animation: blink 2s linear infinite;
+  border: 5px solid red;
 }

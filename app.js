@@ -3,6 +3,7 @@
 // global variables
 let votingRounds = 25;
 let productsArray = [];
+let previousView = new Array(6);
 
 // DOM Windows
 let imgContainer = document.getElementById('img-container');
@@ -31,13 +32,22 @@ function renderImgs(){
   let imageOneIndex = randomIndexGenerator();
   let imageTwoIndex = randomIndexGenerator();
   let imageThreeIndex = randomIndexGenerator();
+  previousView.splice(0,3);
 
-  while (imageTwoIndex === imageOneIndex){
+  while (previousView.includes(imageOneIndex)) {
+    imageOneIndex = randomIndexGenerator();
+  }
+  previousView.push(imageOneIndex);
+
+  while (previousView.includes(imageTwoIndex)) {
     imageTwoIndex = randomIndexGenerator();
   }
-  while (imageThreeIndex === imageOneIndex || imageThreeIndex === imageTwoIndex){
+  previousView.push(imageTwoIndex);
+
+  while (previousView.includes(imageThreeIndex)) {
     imageThreeIndex = randomIndexGenerator();
   }
+  previousView.push(imageThreeIndex);
 
   imgOne.src = productsArray[imageOneIndex].image;
   imgOne.title = productsArray[imageOneIndex].name;
@@ -64,6 +74,7 @@ function handleImgClick(event){
 
   if (votingRounds === 0){
     imgContainer.removeEventListener('click', handleImgClick);
+    resultBtn.classList.add('neon-blink');
   }
 }
 
@@ -77,6 +88,7 @@ function handleShowResults(){
       resultsList.appendChild(productsListItem);
     }
     resultBtn.removeEventListener('click', handleShowResults);
+    resultBtn.classList.remove('neon-blink');
   }
 }
 
