@@ -76,6 +76,9 @@ function handleImgClick(event){
   if (votingRounds === 0){
     imgContainer.removeEventListener('click', handleImgClick);
     resultBtn.classList.add('neon-blink');
+
+    let stringifiedProducts = JSON.stringify(productsArray);
+    localStorage.setItem('myProducts', stringifiedProducts);
   }
 }
 
@@ -157,16 +160,28 @@ function renderChart(){
 
 // executable code
 
-let products = ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegum', 'chair', 'cthulhu', 'dog-duck', 'dragon', 'pen', 'pet-sweep', 'scissors', 'shark', 'tauntaun', 'unicorn', 'water-can', 'wine-glass'];
+// Local Storage Continues Here
 
-let sweep = new Product('sweep','png');
-productsArray.push(sweep);
+let retrievedProducts = localStorage.getItem('myProducts');
+let parsedProducts = JSON.parse(retrievedProducts);
 
-let x;
-for (let j in products){
-  x = new Product(products[j]);
-  productsArray.push(x);
+if(retrievedProducts) {
+  productsArray = parsedProducts;
+
+} else {
+  let products = ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegum', 'chair', 'cthulhu', 'dog-duck', 'dragon', 'pen', 'pet-sweep', 'scissors', 'shark', 'tauntaun', 'unicorn', 'water-can', 'wine-glass'];
+
+  let sweep = new Product('sweep','png');
+  productsArray.push(sweep);
+
+  let x;
+  for (let j in products){
+    x = new Product(products[j]);
+    productsArray.push(x);
+  }
 }
+
+
 
 renderImgs();
 
